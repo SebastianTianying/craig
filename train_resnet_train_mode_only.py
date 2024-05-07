@@ -545,43 +545,36 @@ class AverageMeter(object):
 
 def predictions(loader, model):
     """
-    Get predictions while staying in training mode, with optional half-precision based on args.half.
+    Get predictions
     """
     batch_time = AverageMeter()
 
-    # Ensure the model remains in training mode
-    model.train()
+    # switch to evaluate mode
+    model.eval()
 
-    # Initialize prediction and label storage
-    preds = torch.zeros(len(loader.dataset), CLASS_NUM, dtype=torch.float16 if args.half else torch.float32).cuda()
-    labels = torch.zeros(len(loader.dataset), dtype=torch.int).cuda()
-
+    preds = torch.zeros(TRAIN_NUM, CLASS_NUM).cuda()
+    labels = torch.zeros(TRAIN_NUM, dtype=torch.int)
     end = time.time()
-    with torch.no_grad():  # Disable gradient computation
+    with torch.no_grad():
         for i, (input, target, idx) in enumerate(loader):
-            input = input.cuda()
-            target = target.cuda()
+            input_var = input.cuda()
 
-            # Convert to half-precision if specified
             if args.half:
-                input = input.half()
+                input_var = input_var.half()
 
-            # Compute the outputs
-            output = model(input)
+            preds[idx, :] = nn.Softmax(dim=1)(model(input_var))
+            labels[idx] = target.int()
 
-            # Store the outputs and labels
-            preds[idx.long()] = output.detach()  # Detach predictions to avoid gradients
-            labels[idx.long()] = target.int()
-
-            # Measure and record the elapsed time
+            # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
 
-            # Optional: print prediction progress
             # if i % args.print_freq == 0:
-            #     print('Predict: [{0}/{1}]\t Time {batch_time.val:.3f} ({batch_time.avg:.3f})'.format(i, len(loader), batch_time=batch_time))
+            #     print('Predict: [{0}/{1}]\t'
+            #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})'
+            #           .format(i, len(loader), batch_time=batch_time))
 
-    return preds.cpu().numpy(), labels.cpu().numpy()
+    return preds.cpu().data.numpy(), labels.cpu().data.numpy()
 
 
 def accuracy(output, target, topk=(1,)):
