@@ -569,10 +569,10 @@ def predictions(loader, model):
             batch_time.update(time.time() - end)
             end = time.time()
 
-            # if i % args.print_freq == 0:
-            #     print('Predict: [{0}/{1}]\t'
-            #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})'
-            #           .format(i, len(loader), batch_time=batch_time))
+            if i % args.print_freq == 0:
+                 print('Predict: [{0}/{1}]\t'
+                       'Time {batch_time.val:.3f} ({batch_time.avg:.3f})'
+                       .format(i, len(loader), batch_time=batch_time))
 
     return preds.cpu().data.numpy(), labels.cpu().data.numpy()
 
