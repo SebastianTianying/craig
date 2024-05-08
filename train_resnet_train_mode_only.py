@@ -2,7 +2,7 @@ import argparse
 import os
 import time
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = '7'
+os.environ["CUDA_VISIBLE_DEVICES"] = '6,7'
 import torch
 import torch.nn as nn
 import torch.nn.parallel
