@@ -1,0 +1,37 @@
+None
+['resnet110', 'resnet1202', 'resnet20', 'resnet32', 'resnet44', 'resnet56']
+--------- subset_size: 0.1, method: sgd, moment: 0.9, lr_schedule: mile, greedy: True, stoch: 0, rs: 1.0 ---------------
+Files already downloaded and verified
+Files already downloaded and verified
+lr schedule: mile, epochs: 200
+lr: 0.1, b: 0.1
+Random init subset size: 1.0% = 50000
+Warm start learning rate
+current lr 0.00000e+00
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	Time 5.165 (5.165)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+Traceback (most recent call last):
+  File "train_resnet.py", line 603, in <module>
+    main(subset_size=args.subset_size, greedy=args.greedy)
+  File "train_resnet.py", line 304, in main
+    subset, subset_weight, _, _, ordering_time, similarity_time = util.get_orders_and_weights(
+  File "/home/tianyingz/dev_folder/craig/util.py", line 478, in get_orders_and_weights
+    order_mg_all, cluster_sizes_all, greedy_times, similarity_times = zip(*map(
+  File "/home/tianyingz/dev_folder/craig/util.py", line 479, in <lambda>
+    lambda c: faciliy_location_order(c, X, y, metric, num_per_class[c], smtk, no, stoch_greedy, weights), classes))
+  File "/home/tianyingz/dev_folder/craig/util.py", line 291, in faciliy_location_order
+    order, cluster_sz, greedy_time, F_val = get_facility_location_submodular_order(
+  File "/home/tianyingz/dev_folder/craig/util.py", line 277, in get_facility_location_submodular_order
+    sz[np.argmax(S[i, order])] += 1
+  File "<__array_function__ internals>", line 200, in argmax
+  File "/home/tianyingz/anaconda3/envs/p3.8/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 1242, in argmax
+    return _wrapfunc(a, 'argmax', axis=axis, out=out, **kwds)
+  File "/home/tianyingz/anaconda3/envs/p3.8/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 57, in _wrapfunc
+    return bound(*args, **kwds)
+ValueError: attempt to get argmax of an empty sequence
