@@ -2,7 +2,7 @@ import argparse
 import os
 import time
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = '7'
+os.environ["CUDA_VISIBLE_DEVICES"] = '6,7'
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -595,5 +595,19 @@ def accuracy(output, target, topk=(1,)):
 
 if __name__ == '__main__':
     args = parser.parse_args()
+
+    # Start the timer
+    start_time = time.time()
+
+    # Run the main training function
     main(subset_size=args.subset_size, greedy=args.greedy)
+
+    # End the timer
+    end_time = time.time()
+
+    # Calculate the total time taken
+    total_time = end_time - start_time
+
+    # Print the total time taken
+    print(f"Total training time: {total_time:.2f} seconds")
 
