@@ -1,0 +1,791 @@
+None
+['resnet110', 'resnet1202', 'resnet20', 'resnet32', 'resnet44', 'resnet56']
+--------- subset_size: 0.1, method: sgd, moment: 0.9, lr_schedule: mile, greedy: True, stoch: 0, rs: 1.0 ---------------
+Files already downloaded and verified
+Files already downloaded and verified
+lr schedule: mile, epochs: 20
+lr: 0.1, b: 0.1
+Random init subset size: 1.0% = 50000
+Warm start learning rate
+current lr 0.00000e+00
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 5.189 (5.189)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.598, Sim time: 0.592
+90.000 % not selected yet
+ * Prec@1 10.720
+ * Prec@1 10.650
+run: 0, subset_size: 0.1, epoch: 0, prec1: 10.719999987792969, loss: 3.076, g: 0.100, b: 0.100, best_prec1_gb: 10.719999987792969, best_loss_gb: 3.076, best_run: 0;  best_prec_all: 10.719999987792969, best_loss_all: 3.076, best_g: 0.100, best_b: 0.100, not selected %:90.0
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 5.00000e-03
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.874 (0.874)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 1.994, Sim time: 0.430
+81.580 % not selected yet
+ * Prec@1 15.220
+ * Prec@1 15.456
+run: 0, subset_size: 0.1, epoch: 1, prec1: 15.22, loss: 4.028, g: 0.100, b: 0.100, best_prec1_gb: 15.22, best_loss_gb: 3.076, best_run: 0;  best_prec_all: 15.22, best_loss_all: 3.076, best_g: 0.100, best_b: 0.100, not selected %:81.58
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 1.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.886 (0.886)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 1.846, Sim time: 0.548
+74.344 % not selected yet
+ * Prec@1 18.320
+ * Prec@1 18.114
+run: 0, subset_size: 0.1, epoch: 2, prec1: 18.319999995422364, loss: 3.705, g: 0.100, b: 0.100, best_prec1_gb: 18.319999995422364, best_loss_gb: 3.076, best_run: 0;  best_prec_all: 18.319999995422364, best_loss_all: 3.076, best_g: 0.100, best_b: 0.100, not selected %:74.344
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 1.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.900 (0.900)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.676, Sim time: 0.565
+68.544 % not selected yet
+ * Prec@1 25.110
+ * Prec@1 25.088
+run: 0, subset_size: 0.1, epoch: 3, prec1: 25.109999969482423, loss: 2.218, g: 0.100, b: 0.100, best_prec1_gb: 25.109999969482423, best_loss_gb: 2.218, best_run: 0;  best_prec_all: 25.109999969482423, best_loss_all: 2.218, best_g: 0.100, best_b: 0.100, not selected %:68.54400000000001
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 2.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.955 (0.955)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.029, Sim time: 0.425
+63.642 % not selected yet
+ * Prec@1 26.000
+ * Prec@1 26.036
+run: 0, subset_size: 0.1, epoch: 4, prec1: 25.999999987792968, loss: 2.004, g: 0.100, b: 0.100, best_prec1_gb: 25.999999987792968, best_loss_gb: 2.004, best_run: 0;  best_prec_all: 25.999999987792968, best_loss_all: 2.004, best_g: 0.100, best_b: 0.100, not selected %:63.641999999999996
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 2.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.796 (0.796)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.450, Sim time: 0.464
+58.858 % not selected yet
+ * Prec@1 26.640
+ * Prec@1 26.392
+run: 0, subset_size: 0.1, epoch: 5, prec1: 26.63999997253418, loss: 1.954, g: 0.100, b: 0.100, best_prec1_gb: 26.63999997253418, best_loss_gb: 1.954, best_run: 0;  best_prec_all: 26.63999997253418, best_loss_all: 1.954, best_g: 0.100, best_b: 0.100, not selected %:58.858
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 3.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.851 (0.851)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.695, Sim time: 0.557
+54.368 % not selected yet
+ * Prec@1 31.520
+ * Prec@1 30.364
+run: 0, subset_size: 0.1, epoch: 6, prec1: 31.52, loss: 1.886, g: 0.100, b: 0.100, best_prec1_gb: 31.52, best_loss_gb: 1.886, best_run: 0;  best_prec_all: 31.52, best_loss_all: 1.886, best_g: 0.100, best_b: 0.100, not selected %:54.368
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 3.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.878 (0.878)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.636, Sim time: 0.514
+50.140 % not selected yet
+ * Prec@1 28.360
+ * Prec@1 28.608
+run: 0, subset_size: 0.1, epoch: 7, prec1: 28.35999997253418, loss: 2.090, g: 0.100, b: 0.100, best_prec1_gb: 31.52, best_loss_gb: 1.886, best_run: 0;  best_prec_all: 31.52, best_loss_all: 1.886, best_g: 0.100, best_b: 0.100, not selected %:50.13999999999999
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 4.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.843 (0.843)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.272, Sim time: 0.644
+46.176 % not selected yet
+ * Prec@1 34.340
+ * Prec@1 33.498
+run: 0, subset_size: 0.1, epoch: 8, prec1: 34.339999996948244, loss: 1.845, g: 0.100, b: 0.100, best_prec1_gb: 34.339999996948244, best_loss_gb: 1.845, best_run: 0;  best_prec_all: 34.339999996948244, best_loss_all: 1.845, best_g: 0.100, best_b: 0.100, not selected %:46.176
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 4.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.885 (0.885)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.853, Sim time: 0.601
+42.508 % not selected yet
+ * Prec@1 35.330
+ * Prec@1 35.260
+run: 0, subset_size: 0.1, epoch: 9, prec1: 35.3299999633789, loss: 1.702, g: 0.100, b: 0.100, best_prec1_gb: 35.3299999633789, best_loss_gb: 1.702, best_run: 0;  best_prec_all: 35.3299999633789, best_loss_all: 1.702, best_g: 0.100, best_b: 0.100, not selected %:42.508
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 5.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.776 (0.776)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.671, Sim time: 0.445
+39.030 % not selected yet
+ * Prec@1 33.020
+ * Prec@1 32.266
+run: 0, subset_size: 0.1, epoch: 10, prec1: 33.01999998168945, loss: 1.921, g: 0.100, b: 0.100, best_prec1_gb: 35.3299999633789, best_loss_gb: 1.702, best_run: 0;  best_prec_all: 35.3299999633789, best_loss_all: 1.702, best_g: 0.100, best_b: 0.100, not selected %:39.03
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 5.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.854 (0.854)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.820, Sim time: 0.612
+35.856 % not selected yet
+ * Prec@1 35.540
+ * Prec@1 35.510
+run: 0, subset_size: 0.1, epoch: 11, prec1: 35.54000002441406, loss: 1.843, g: 0.100, b: 0.100, best_prec1_gb: 35.54000002441406, best_loss_gb: 1.702, best_run: 0;  best_prec_all: 35.54000002441406, best_loss_all: 1.702, best_g: 0.100, best_b: 0.100, not selected %:35.856
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 6.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.876 (0.876)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.861, Sim time: 0.452
+33.044 % not selected yet
+ * Prec@1 39.900
+ * Prec@1 38.940
+run: 0, subset_size: 0.1, epoch: 12, prec1: 39.90000000610352, loss: 1.650, g: 0.100, b: 0.100, best_prec1_gb: 39.90000000610352, best_loss_gb: 1.650, best_run: 0;  best_prec_all: 39.90000000610352, best_loss_all: 1.650, best_g: 0.100, best_b: 0.100, not selected %:33.044000000000004
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 6.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.896 (0.896)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.928, Sim time: 0.466
+30.518 % not selected yet
+ * Prec@1 41.500
+ * Prec@1 41.334
+run: 0, subset_size: 0.1, epoch: 13, prec1: 41.49999993286133, loss: 1.578, g: 0.100, b: 0.100, best_prec1_gb: 41.49999993286133, best_loss_gb: 1.578, best_run: 0;  best_prec_all: 41.49999993286133, best_loss_all: 1.578, best_g: 0.100, best_b: 0.100, not selected %:30.518
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 7.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.920 (0.920)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.933, Sim time: 0.608
+28.114 % not selected yet
+ * Prec@1 45.100
+ * Prec@1 45.050
+run: 0, subset_size: 0.1, epoch: 14, prec1: 45.09999997558594, loss: 1.504, g: 0.100, b: 0.100, best_prec1_gb: 45.09999997558594, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 45.09999997558594, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:28.114
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 7.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.859 (0.859)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.272, Sim time: 0.561
+25.800 % not selected yet
+ * Prec@1 42.880
+ * Prec@1 43.094
+run: 0, subset_size: 0.1, epoch: 15, prec1: 42.87999993896484, loss: 1.535, g: 0.100, b: 0.100, best_prec1_gb: 45.09999997558594, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 45.09999997558594, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:25.8
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 8.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.904 (0.904)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.162, Sim time: 0.514
+23.492 % not selected yet
+ * Prec@1 45.760
+ * Prec@1 46.022
+run: 0, subset_size: 0.1, epoch: 16, prec1: 45.75999994506836, loss: 1.551, g: 0.100, b: 0.100, best_prec1_gb: 45.75999994506836, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 45.75999994506836, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:23.491999999999997
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 8.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.984 (0.984)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.079, Sim time: 0.501
+21.502 % not selected yet
+ * Prec@1 41.150
+ * Prec@1 40.926
+run: 0, subset_size: 0.1, epoch: 17, prec1: 41.14999995727539, loss: 1.918, g: 0.100, b: 0.100, best_prec1_gb: 45.75999994506836, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 45.75999994506836, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:21.502
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 9.00000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.842 (0.842)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.177, Sim time: 0.359
+19.810 % not selected yet
+ * Prec@1 47.650
+ * Prec@1 47.404
+run: 0, subset_size: 0.1, epoch: 18, prec1: 47.649999975585935, loss: 1.506, g: 0.100, b: 0.100, best_prec1_gb: 47.649999975585935, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 47.649999975585935, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:19.81
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+current lr 9.50000e-02
+Selecting 5000 elements greedily from predictions
+Predict: [0/98]	 Time 0.893 (0.893)
+0
+[   29    30    35 ... 49941 49992 49994]
+5000
+1
+[    4     5    32 ... 49993 49998 49999]
+5000
+2
+[    6    13    18 ... 49987 49991 49995]
+5000
+3
+[    9    17    21 ... 49979 49982 49983]
+5000
+4
+[    3    10    20 ... 49981 49984 49990]
+5000
+5
+[   27    40    51 ... 49964 49980 49988]
+5000
+6
+[    0    19    22 ... 49962 49966 49996]
+5000
+7
+[    7    11    12 ... 49965 49978 49986]
+5000
+8
+[    8    62    69 ... 49968 49976 49985]
+5000
+9
+[    1     2    14 ... 49963 49971 49997]
+5000
+FL time: 2.165, Sim time: 0.524
+18.294 % not selected yet
+ * Prec@1 45.010
+ * Prec@1 45.188
+run: 0, subset_size: 0.1, epoch: 19, prec1: 45.01, loss: 1.548, g: 0.100, b: 0.100, best_prec1_gb: 47.649999975585935, best_loss_gb: 1.504, best_run: 0;  best_prec_all: 47.649999975585935, best_loss_all: 1.504, best_g: 0.100, best_b: 0.100, not selected %:18.294
+Saving the results to /tmp/cifar10_sgd_moment_0.9_resnet20_0.1_grd_w_warm_mile_start_0_lag_1
+[47.64999998] 47.649999975585935 [18.294] 18.294
+Total training time: 1130.76 seconds
