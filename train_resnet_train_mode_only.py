@@ -567,7 +567,7 @@ def predictions(loader, model):
                 input = input.half()
 
             # Compute the outputs
-            output = model(input)
+            output = nn.Softmax(dim=1)(model(input))
 
             # Store the outputs and labels
             preds[idx.long()] = output.detach()  # Detach predictions to avoid gradients
