@@ -561,6 +561,8 @@ def predictions(loader, model):
     Get predictions while staying in training mode, with optional half-precision based on args.half.
     """
     batch_time = AverageMeter()
+    cuda_time = AverageMeter()
+    data_load_time = AverageMeter()
 
     # Ensure the model remains in training mode
     model.train()
@@ -572,8 +574,12 @@ def predictions(loader, model):
     end = time.time()
     with torch.no_grad():  # Disable gradient computation
         for i, (input, target, idx) in enumerate(loader):
+            data_load_end = time.time()
+            data_load_time.update(data_load_end - end)
+
             input = input.cuda()
             target = target.cuda()
+            cuda_start = time.time()
 
             # Convert to half-precision if specified
             if args.half:
@@ -586,14 +592,20 @@ def predictions(loader, model):
             preds[idx.long()] = output.detach()  # Detach predictions to avoid gradients
             labels[idx.long()] = target.int()
 
+            cuda_end = time.time()
+            cuda_time.update(cuda_end - cuda_start)
+
             # Measure and record the elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
 
             # Optional: print prediction progress
             if i % args.print_freq == 0:
-                 print('Predict: [{0}/{1}]\t Time {batch_time.val:.3f} ({batch_time.avg:.3f})'.format(i, len(loader), batch_time=batch_time))
-
+                print(f'Predict: [{i}/{len(loader)}]\t'
+                      f'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                      f'Data Load Time {data_load_time.val:.3f} ({data_load_time.avg:.3f})\t'
+                      f'CUDA Time {cuda_time.val:.3f} ({cuda_time.avg:.3f})')
+                
     return preds.cpu().numpy(), labels.cpu().numpy()
 
 
