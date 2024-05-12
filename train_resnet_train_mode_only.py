@@ -410,13 +410,14 @@ def main(subset_size=.1, greedy=0):
 
 def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     """
-        Run one train epoch
+    Run one train epoch with detailed timing for data loading and CUDA operations.
     """
     if weight is None:
         weight = torch.ones(TRAIN_NUM).cuda()
 
     batch_time = AverageMeter()
     data_time = AverageMeter()
+    cuda_time = AverageMeter()
     losses = AverageMeter()
     top1 = AverageMeter()
 
@@ -424,10 +425,12 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     model.train()
 
     end = time.time()
+    first_batch = True
     for i, (input, target, idx) in enumerate(train_loader):
 
         # measure data loading time
-        data_time.update(time.time() - end)
+        data_load_end = time.time()
+        data_time.update(data_load_end - end)
 
         target = target.cuda()
         input_var = input.cuda()
@@ -435,36 +438,46 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
         if args.half:
             input_var = input_var.half()
 
+        # Start timing CUDA operations
+        cuda_start = time.time()
+
         # compute output
         output = model(input_var)
         loss = criterion(output, target_var)
-        loss = (loss * weight[idx.long()]).mean()  # (Note)
+        loss = (loss * weight[idx.long()]).mean()
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-
         loss.backward()
         optimizer.step()
 
+        # End timing CUDA operations
+        cuda_end = time.time()
+        cuda_time.update(cuda_end - cuda_start)
+
         output = output.float()
         loss = loss.float()
+
         # measure accuracy and record loss
         prec1 = accuracy(output.data, target)[0]
         losses.update(loss.item(), input.size(0))
         top1.update(prec1.item(), input.size(0))
 
         # measure elapsed time
-        batch_time.update(time.time() - end)
+        batch_time.update(cuda_end - end)
         end = time.time()
 
-        # if i % args.print_freq == 0:
-        #     print('Epoch: [{0}][{1}/{2}]\t'
-        #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-        #           'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-        #           'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-        #           'Prec@1 {top1.val:.3f} ({top1.avg:.3f})'.format(
-        #               epoch, i, len(train_loader), batch_time=batch_time,
-        #               data_time=data_time, loss=losses, top1=top1))
+        if first_batch or i % args.print_freq == 0:
+            print('Epoch: [{0}][{1}/{2}]\t'
+                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                  'Data Load Time {data_time.val:.3f} ({data_time.avg:.3f})\t'
+                  'CUDA Time {cuda_time.val:.3f} ({cuda_time.avg:.3f})\t'
+                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})'.format(
+                      epoch, i, len(train_loader), batch_time=batch_time,
+                      data_time=data_time, cuda_time=cuda_time, loss=losses, top1=top1))
+            first_batch = False
+
     return data_time.sum, batch_time.sum
 
 
