@@ -94,7 +94,7 @@ def prewarm_and_initialize(model, loader, mode='train'):
 
     with torch.no_grad():
         for i, (input, target, idx) in enumerate(loader):
-            input_var = input.cuda()
+            input_var = input[:1].cuda()  # Use a smaller batch size to avoid OOM
             if args.half:
                 input_var = input_var.half()
             output = model(input_var)  # Forward pass
