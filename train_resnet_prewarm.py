@@ -2,6 +2,7 @@ import argparse
 import os
 import time
 import numpy as np
+os.environ["CUDA_VISIBLE_DEVICES"] = '6,7'
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -11,27 +12,31 @@ import torch.utils.data
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import resnet
+
 from torch.utils.data import Dataset, DataLoader
 import util
 from warnings import simplefilter
 from GradualWarmupScheduler import *
 
+
 # ignore all future warnings
 simplefilter(action='ignore', category=FutureWarning)
 np.seterr(all='ignore')
 
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
 
 model_names = sorted(name for name in resnet.__dict__
-                     if name.islower() and not name.startswith("__")
+    if name.islower() and not name.startswith("__")
                      and name.startswith("resnet")
                      and callable(resnet.__dict__[name]))
 
 print(model_names)
 
-parser = argparse.ArgumentParser(description='Proper ResNets for CIFAR10 in pytorch')
-parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet20', choices=model_names,
-                    help='model architecture: ' + ' | '.join(model_names) + ' (default: resnet20)')
+parser = argparse.ArgumentParser(description='Propert ResNets for CIFAR10 in pytorch')
+parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet20', #'resnet56', #
+                    choices=model_names,
+                    help='model architecture: ' + ' | '.join(model_names) +
+                         ' (default: resnet32)')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--epochs', default=200, type=int, metavar='N',
@@ -55,7 +60,7 @@ parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
 parser.add_argument('--pretrained', dest='pretrained', action='store_true',
                     help='use pre-trained model')
 parser.add_argument('--half', dest='half', action='store_true',
-                    help='use half-precision(16-bit)')
+                    help='use half-precision(16-bit) ')
 parser.add_argument('--save-dir', dest='save_dir',
                     help='The directory used to save the trained models',
                     default='save_temp', type=str)
@@ -68,7 +73,7 @@ parser.add_argument('--subset_size', '-s', dest='subset_size', type=float, help=
 parser.add_argument('--random_subset_size', '-rs', type=float, help='size of the subset', default=1.0)
 parser.add_argument('--st_grd', '-stg', type=float, help='stochastic greedy', default=0)
 parser.add_argument('--smtk', type=int, help='smtk', default=1)
-parser.add_argument('--ig', type=str, help='ig method', default='sgd', choices=['sgd', 'adam', 'adagrad'])
+parser.add_argument('--ig', type=str, help='ig method', default='sgd', choices=['sgd, adam, adagrad'])
 parser.add_argument('--lr_schedule', '-lrs', type=str, help='learning rate schedule', default='mile',
                     choices=['mile', 'exp', 'cnt', 'step', 'cosine'])
 parser.add_argument('--gamma', type=float, default=-1, help='learning rate decay parameter')
@@ -94,16 +99,17 @@ def prewarm_and_initialize(model, loader, mode='train'):
 
     with torch.no_grad():
         for i, (input, target, idx) in enumerate(loader):
-            input_var = input[:1].cuda()  # Use a smaller batch size to avoid OOM
+            input_var = input[:1].cuda()  # Use a smaller batch size to avoid O>
             if args.half:
                 input_var = input_var.half()
             output = model(input_var)  # Forward pass
             break  # Only do this for the first batch
 
 def main(subset_size=.1, greedy=0):
+
     global args, best_prec1
     args = parser.parse_args()
-    # os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
+    #os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
     print(f'--------- subset_size: {subset_size}, method: {args.ig}, moment: {args.momentum}, '
           f'lr_schedule: {args.lr_schedule}, greedy: {greedy}, stoch: {args.st_grd}, rs: {args.random_subset_size} ---------------')
@@ -128,7 +134,7 @@ def main(subset_size=.1, greedy=0):
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
 
-    cudnn.benchmark = True  # Enable benchmarking
+    cudnn.benchmark = True
 
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
@@ -146,14 +152,15 @@ def main(subset_size=.1, greedy=0):
     class IndexedDataset(Dataset):
         def __init__(self):
             self.cifar10 = datasets.CIFAR10(root='./data', train=True, transform=transforms.Compose([
-                transforms.RandomHorizontalFlip(),
-                transforms.RandomCrop(32, 4),
-                transforms.ToTensor(),
-                normalize,
-            ]), download=True)
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomCrop(32, 4),
+            transforms.ToTensor(),
+            normalize,
+        ]), download=True)
 
         def __getitem__(self, index):
             data, target = self.cifar10[index]
+            # Your transformations here (or set it in CIFAR10)
             return data, target, index
 
         def __len__(self):
@@ -181,7 +188,7 @@ def main(subset_size=.1, greedy=0):
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
 
-    train_criterion = nn.CrossEntropyLoss(reduction='none').cuda()
+    train_criterion = nn.CrossEntropyLoss(reduction='none').cuda()  # (Note)
     val_criterion = nn.CrossEntropyLoss().cuda()
 
     if args.half:
@@ -217,7 +224,7 @@ def main(subset_size=.1, greedy=0):
     # Prewarm CUDA and initialize model layers
     prewarm_and_initialize(model, indexed_loader, mode='eval')
     cudnn.benchmark = False  # Disable benchmarking after the first pass
-
+    
     for run in range(runs):
         best_prec1_all, best_loss_all, prec1 = 0, 1e10, 0
 
@@ -255,6 +262,7 @@ def main(subset_size=.1, greedy=0):
             lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(
                 optimizer, milestones=milestones, last_epoch=args.start_epoch - 1, gamma=b)
         elif args.lr_schedule == 'cosine':
+            # lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=20)
             lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
         else:  # constant lr
             lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=args.epochs, gamma=1.0)
@@ -267,30 +275,37 @@ def main(subset_size=.1, greedy=0):
             lr_scheduler_f = lr_scheduler
 
         if args.arch in ['resnet1202', 'resnet110']:
+            # for resnet1202 original paper uses lr=0.01 for first 400 minibatches for warm-up
+            # then switch back. In this setup it will correspond for first epoch.
             for param_group in optimizer.param_groups:
-                param_group['lr'] = args.lr * 0.1
+                param_group['lr'] = args.lr*0.1
 
         if args.evaluate:
             validate(val_loader, model, val_criterion)
             return
 
         for epoch in range(args.start_epoch, args.epochs):
+
+            # train for one epoch
             print('current lr {:.5e}'.format(optimizer.param_groups[0]['lr']))
 
+            #############################
             weight = None
             if subset_size >= 1 or epoch < args.start_subset:
                 print('Training on all the data')
                 train_loader = indexed_loader
 
-            elif subset_size < 1 and (epoch % (args.lag + args.start_subset) == 0 or epoch == args.start_subset):
+            elif subset_size < 1 and \
+                    (epoch % (args.lag + args.start_subset) == 0 or epoch == args.start_subset):
                 B = int(subset_size * TRAIN_NUM)
                 if greedy == 0:
+                    # order = np.arange(0, TRAIN_NUM)
                     np.random.shuffle(order)
                     subset = order[:B]
                     weights = np.zeros(len(indexed_loader.dataset))
                     weights[subset] = np.ones(B)
                     print(f'Selecting {B} element from the pre-selected random subset of size: {len(subset)}')
-                else:
+                else:  # Note: warm start
                     if args.cluster_features:
                         print(f'Selecting {B} elements greedily from features')
                         data = datasets.CIFAR10(root='./data', train=True, transform=transforms.Compose([
@@ -311,12 +326,15 @@ def main(subset_size=.1, greedy=0):
                         equal_num=True)
 
                     weights = np.zeros(len(indexed_loader.dataset))
+                    # weights[subset] = np.ones(len(subset))
                     subset_weight = subset_weight / np.sum(subset_weight) * len(subset_weight)
                     if args.save_subset:
                         selected_ndx[run, epoch], selected_wgt[run, epoch] = subset, subset_weight
 
                     weights[subset] = subset_weight
                     weight = torch.from_numpy(weights).float().cuda()
+                    # weight = torch.tensor(weights).cuda()
+                    # np.random.shuffle(subset)
                     print(f'FL time: {ordering_time:.3f}, Sim time: {similarity_time:.3f}')
                     grd_time[run, epoch], sim_time[run, epoch] = ordering_time, similarity_time
 
@@ -332,15 +350,19 @@ def main(subset_size=.1, greedy=0):
                 print('Using the previous subset')
                 not_selected[run, epoch] = not_selected[run, epoch - 1]
                 print(f'{not_selected[run, epoch]:.3f} % not selected yet')
+                #############################
 
             data_time[run, epoch], train_time[run, epoch] = train(
                 train_loader, model, train_criterion, optimizer, epoch, weight)
 
             lr_scheduler_f.step()
 
+            # evaluate on validation set
             prec1, loss = validate(val_loader, model, val_criterion)
 
+            # remember best prec@1 and save checkpoint
             is_best = prec1 > best_prec1
+            # best_run = run if is_best else best_run
             best_prec1 = max(prec1, best_prec1)
             if best_prec1 > best_prec1_all:
                 best_gs[run], best_bs[run] = lr, b
@@ -348,6 +370,7 @@ def main(subset_size=.1, greedy=0):
             test_acc[run, epoch], test_loss[run, epoch] = prec1, loss
 
             ta, tl = validate(train_val_loader, model, val_criterion)
+            # best_run_loss = run if tl < best_loss else best_run_loss
             best_loss = min(tl, best_loss)
             best_loss_all = min(best_loss_all, best_loss)
             train_acc[run, epoch], train_loss[run, epoch] = ta, tl
@@ -358,6 +381,11 @@ def main(subset_size=.1, greedy=0):
                     'state_dict': model.state_dict(),
                     'best_prec1': best_prec1,
                 }, is_best, filename=os.path.join(args.save_dir, 'checkpoint.th'))
+
+            # save_checkpoint({
+            # 'state_dict': model.state_dict(),
+            # 'best_prec1': best_prec1,
+            # }, is_best, filename=os.path.join(args.save_dir, 'model.th'))
 
             print(f'run: {run}, subset_size: {subset_size}, epoch: {epoch}, prec1: {prec1}, loss: {tl:.3f}, '
                   f'g: {lr:.3f}, b: {b:.3f}, '
@@ -399,6 +427,7 @@ def main(subset_size=.1, greedy=0):
     print(np.max(test_acc, 1), np.mean(np.max(test_acc, 1)),
           np.min(not_selected, 1), np.mean(np.min(not_selected, 1)))
 
+
 def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     """
     Run one train epoch with detailed timing for data loading and CUDA operations.
@@ -412,11 +441,14 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     losses = AverageMeter()
     top1 = AverageMeter()
 
+    # switch to train mode
     model.train()
 
     end = time.time()
     first_batch = True
     for i, (input, target, idx) in enumerate(train_loader):
+
+        # measure data loading time
         data_load_end = time.time()
         data_time.update(data_load_end - end)
 
@@ -426,26 +458,32 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
         if args.half:
             input_var = input_var.half()
 
+        # Start timing CUDA operations
         cuda_start = time.time()
 
+        # compute output
         output = model(input_var)
         loss = criterion(output, target_var)
         loss = (loss * weight[idx.long()]).mean()
 
+        # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
+        # End timing CUDA operations
         cuda_end = time.time()
         cuda_time.update(cuda_end - cuda_start)
 
         output = output.float()
         loss = loss.float()
 
+        # measure accuracy and record loss
         prec1 = accuracy(output.data, target)[0]
         losses.update(loss.item(), input.size(0))
         top1.update(prec1.item(), input.size(0))
 
+        # measure elapsed time
         batch_time.update(cuda_end - end)
         end = time.time()
 
@@ -470,6 +508,7 @@ def validate(val_loader, model, criterion):
     losses = AverageMeter()
     top1 = AverageMeter()
 
+    # switch to evaluate mode
     model.eval()
 
     end = time.time()
@@ -482,27 +521,44 @@ def validate(val_loader, model, criterion):
             if args.half:
                 input_var = input_var.half()
 
+            # compute output
             output = model(input_var)
             loss = criterion(output, target_var)
 
             output = output.float()
             loss = loss.float()
 
+            # measure accuracy and record loss
             prec1 = accuracy(output.data, target)[0]
             losses.update(loss.item(), input.size(0))
             top1.update(prec1.item(), input.size(0))
 
+            # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
+
+            # if i % args.print_freq == 0:
+            #     print('Test: [{0}/{1}]\t'
+            #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+            #           'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+            #           'Prec@1 {top1.val:.3f} ({top1.avg:.3f})'.format(
+            #               i, len(val_loader), batch_time=batch_time, loss=losses,
+            #               top1=top1))
 
     print(' * Prec@1 {top1.avg:.3f}' .format(top1=top1))
 
     return top1.avg, losses.avg
 
+
 def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
+    """
+    Save the training model
+    """
     torch.save(state, filename)
 
+
 class AverageMeter(object):
+    """Computes and stores the average and current value"""
     def __init__(self):
         self.reset()
 
@@ -518,11 +574,16 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
+
 def predictions(loader, model):
+    """
+    Get predictions
+    """
     batch_time = AverageMeter()
     cuda_time = AverageMeter()
     data_load_time = AverageMeter()
 
+    # switch to evaluate mode
     model.eval()
 
     preds = torch.zeros(TRAIN_NUM, CLASS_NUM).cuda()
@@ -545,6 +606,7 @@ def predictions(loader, model):
             cuda_end = time.time()
             cuda_time.update(cuda_end - cuda_start)
 
+            # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
 
@@ -556,7 +618,9 @@ def predictions(loader, model):
 
     return preds.cpu().data.numpy(), labels.cpu().data.numpy()
 
+
 def accuracy(output, target, topk=(1,)):
+    """Computes the precision@k for the specified values of k"""
     maxk = max(topk)
     batch_size = target.size(0)
 
@@ -570,15 +634,21 @@ def accuracy(output, target, topk=(1,)):
         res.append(correct_k.mul_(100.0 / batch_size))
     return res
 
+
 if __name__ == '__main__':
     args = parser.parse_args()
 
+    # Start the timer
     start_time = time.time()
 
+    # Run the main training function
     main(subset_size=args.subset_size, greedy=args.greedy)
 
+    # End the timer
     end_time = time.time()
 
+    # Calculate the total time taken
     total_time = end_time - start_time
 
+    # Print the total time taken
     print(f"Total training time: {total_time:.2f} seconds")
