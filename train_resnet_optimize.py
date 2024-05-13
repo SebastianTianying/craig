@@ -18,6 +18,7 @@ import util
 from warnings import simplefilter
 from GradualWarmupScheduler import *
 
+import torch.cuda.amp as amp
 
 # ignore all future warnings
 simplefilter(action='ignore', category=FutureWarning)
@@ -88,22 +89,6 @@ parser.add_argument('--save_subset', dest='save_subset', action='store_true', he
 TRAIN_NUM = 50000
 CLASS_NUM = 10
 
-def prewarm_and_initialize(model, loader, mode='train'):
-    """
-    Prewarm CUDA and initialize model layers with a dummy forward pass.
-    """
-    if mode == 'eval':
-        model.eval()
-    else:
-        model.train()
-
-    with torch.no_grad():
-        for i, (input, target, idx) in enumerate(loader):
-            input_var = input[:1].cuda()  # Use a smaller batch size to avoid O>
-            if args.half:
-                input_var = input_var.half()
-            output = model(input_var)  # Forward pass
-            break  # Only do this for the first batch
 
 def main(subset_size=.1, greedy=0):
 
@@ -221,10 +206,6 @@ def main(subset_size=.1, greedy=0):
     print(f'lr schedule: {args.lr_schedule}, epochs: {args.epochs}')
     print(f'lr: {lr}, b: {b}')
 
-    # Prewarm CUDA and initialize model layers
-    prewarm_and_initialize(model, indexed_loader, mode='eval')
-    cudnn.benchmark = False  # Disable benchmarking after the first pass
-    
     for run in range(runs):
         best_prec1_all, best_loss_all, prec1 = 0, 1e10, 0
 
@@ -427,7 +408,6 @@ def main(subset_size=.1, greedy=0):
     print(np.max(test_acc, 1), np.mean(np.max(test_acc, 1)),
           np.min(not_selected, 1), np.mean(np.min(not_selected, 1)))
 
-
 def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     """
     Run one train epoch with detailed timing for data loading and CUDA operations.
@@ -444,6 +424,9 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     # switch to train mode
     model.train()
 
+    # Initialize GradScaler for AMP
+    scaler = amp.GradScaler()
+
     end = time.time()
     first_batch = True
     for i, (input, target, idx) in enumerate(train_loader):
@@ -455,21 +438,24 @@ def train(train_loader, model, criterion, optimizer, epoch, weight=None):
         target = target.cuda()
         input_var = input.cuda()
         target_var = target
+
         if args.half:
             input_var = input_var.half()
 
         # Start timing CUDA operations
         cuda_start = time.time()
 
-        # compute output
-        output = model(input_var)
-        loss = criterion(output, target_var)
-        loss = (loss * weight[idx.long()]).mean()
+        with amp.autocast():
+            # compute output
+            output = model(input_var)
+            loss = criterion(output, target_var)
+            loss = (loss * weight[idx.long()]).mean()
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
 
         # End timing CUDA operations
         cuda_end = time.time()
@@ -652,3 +638,4 @@ if __name__ == '__main__':
 
     # Print the total time taken
     print(f"Total training time: {total_time:.2f} seconds")
+
