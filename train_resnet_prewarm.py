@@ -249,15 +249,15 @@ def main(subset_size=.1, greedy=0):
             lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(
                 optimizer, gamma=b, last_epoch=args.start_epoch - 1)
         elif args.lr_schedule == 'step':
-            lr_scheduler = torch.optim.lr.scheduler.StepLR(optimizer, step_size=5, gamma=b)
+            lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=b)
         elif args.lr_schedule == 'mile':
             milestones = np.array([100, 150])
-            lr_scheduler = torch.optim.lr.scheduler.MultiStepLR(
+            lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(
                 optimizer, milestones=milestones, last_epoch=args.start_epoch - 1, gamma=b)
         elif args.lr_schedule == 'cosine':
-            lr_scheduler = torch.optim.lr.scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
+            lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
         else:  # constant lr
-            lr_scheduler = torch.optim.lr.scheduler.StepLR(optimizer, step_size=args.epochs, gamma=1.0)
+            lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=args.epochs, gamma=1.0)
 
         if args.warm_start:
             print('Warm start learning rate')
