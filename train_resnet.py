@@ -118,7 +118,27 @@ def main(subset_size=.1, greedy=0):
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
 
+    #cudnn.benchmark = True
+    # Enable benchmarking for the first pass
     cudnn.benchmark = True
+
+    # Prewarm function to initialize CUDA and select cuDNN algorithms
+    def prewarm_cuda(model, loader):
+        model.train()
+        with torch.no_grad():
+            for i, (input, target, idx) in enumerate(loader):
+                input_var = input.cuda()
+                target_var = target.cuda()
+                if args.half:
+                    input_var = input_var.half()
+                output = model(input_var)  # Forward pass
+                break  # Only do this for the first batch
+
+    # Call this after initializing the model and before the training loop
+    prewarm_cuda(model, indexed_loader)
+
+    # Disable benchmarking after the first pass
+    cudnn.benchmark = False
 
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
