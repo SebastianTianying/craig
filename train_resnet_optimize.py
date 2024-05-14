@@ -305,6 +305,10 @@ def main(subset_size=.1, greedy=0):
                     subset, subset_weight, _, _, ordering_time, similarity_time = util.get_orders_and_weights(
                         B, preds, 'euclidean', smtk=args.smtk, no=0, y=fl_labels, stoch_greedy=args.st_grd,
                         equal_num=True)
+                    
+                    # Add debug prints
+                    print(f'subset: {subset}')
+                    print(f'subset_weight: {subset_weight}')
 
                     weights = np.zeros(len(indexed_loader.dataset))
                     # weights[subset] = np.ones(len(subset))
@@ -407,6 +411,7 @@ def main(subset_size=.1, greedy=0):
 
     print(np.max(test_acc, 1), np.mean(np.max(test_acc, 1)),
           np.min(not_selected, 1), np.mean(np.min(not_selected, 1)))
+
 
 def train(train_loader, model, criterion, optimizer, epoch, weight=None):
     """
@@ -601,6 +606,9 @@ def predictions(loader, model):
                       f'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                       f'Data Load Time {data_load_time.val:.3f} ({data_load_time.avg:.3f})\t'
                       f'CUDA Time {cuda_time.val:.3f} ({cuda_time.avg:.3f})')
+                
+    print(f'Predictions shape: {preds.shape}')
+    print(f'Labels shape: {labels.shape}')
 
     return preds.cpu().data.numpy(), labels.cpu().data.numpy()
 
