@@ -2,7 +2,7 @@ import argparse
 import os
 import time
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = '6,7'
+os.environ["CUDA_VISIBLE_DEVICES"] = '5,6,7'
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -12,6 +12,7 @@ import torch.utils.data
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import resnet
+import random
 
 from torch.utils.data import Dataset, DataLoader
 import util
@@ -88,13 +89,22 @@ parser.add_argument('--save_subset', dest='save_subset', action='store_true', he
 TRAIN_NUM = 50000
 CLASS_NUM = 10
 
+def set_random_seeds(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
 def main(subset_size=.1, greedy=0):
 
     global args, best_prec1
     args = parser.parse_args()
     #os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
-
+    set_random_seeds()
+    
     print(f'--------- subset_size: {subset_size}, method: {args.ig}, moment: {args.momentum}, '
           f'lr_schedule: {args.lr_schedule}, greedy: {greedy}, stoch: {args.st_grd}, rs: {args.random_subset_size} ---------------')
 
